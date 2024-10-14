@@ -1,0 +1,100 @@
+<!--
+WinterYeti's Wordcounter Tool Page
+Version 1.0B
+October 8, 2024
+Notes: Page design utilizes JS Bootstrap for simple, responsive GUI function
+on any device and screen size.
+This page version provides a word count, subcounts for characters, and an estimated
+page count for large bodies of text entered. HTML/Javascript design.
+-->
+
+<!--Begin page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Word Counter</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<!--Begin body and content-->
+<body>
+    <div class="container">
+        <h1 class="text-center">WinterYeti's Enhanced Text Metrics Counter</h1>
+        <div class="description-section">
+            <p>
+                How does this work? Just paste your text of any size into the field below
+                and then click the count text stats button. It's that simple. The tool will
+                give you an easy and quick metrics report on your text, as well as some
+                additional information.</p> 
+            <p></p>
+                I developed this simple page after being frustrated with writing
+                software internal tools that were hard to find in practice or didn't work easily in 
+                producing what I needed to stay within posting requirements on social media.
+            </p>
+        </div>
+        <div class="form-group">
+            <h1 class="text-center">The Tool</h1>
+            <label for="textInput">Paste your paragraph or text here:</label>
+            <textarea id="textInput" class="form-control" rows="6" placeholder="Enter text..."></textarea>
+        </div>
+        <button id="countBtn" class="btn btn-primary btn-block">Count Text Stats</button>
+
+        <div id="output" class="alert alert-info d-none">
+            <h5>Text Statistics:</h5>
+            <p id="lettersCount">Letters: 0</p>
+            <p id="wordsCount">Words: 0</p>
+            <p id="charactersCount">Characters (including spaces): 0</p>
+            <p id="vowelsCount">Vowels: 0</p>
+            <p id="consonantsCount">Consonants: 0</p>
+            <p id="pagesCount">Estimated Pages: 0</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById("countBtn").addEventListener("click", function() {
+            const text = document.getElementById("textInput").value;
+            
+            // Counting words, characters, letters, vowels, and consonants
+            const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+            const charCount = text.length;
+            const letterCount = text.replace(/[^a-zA-Z]/g, "").length;
+            const vowels = text.match(/[aeiouAEIOU]/g);
+            const vowelCount = vowels ? vowels.length : 0;
+            const consonants = text.match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g);
+            const consonantCount = consonants ? consonants.length : 0;
+
+            // Estimate page count (assuming 450 words per page)
+            const wordsPerPage = 450;
+            const estimatedPages = (wordCount / wordsPerPage).toFixed(2);
+
+            // Displaying the results
+            document.getElementById("lettersCount").textContent = `Letters: ${letterCount}`;
+            document.getElementById("wordsCount").textContent = `Words: ${wordCount}`;
+            document.getElementById("charactersCount").textContent = `Characters (including spaces): ${charCount}`;
+            document.getElementById("vowelsCount").textContent = `Vowels: ${vowelCount}`;
+            document.getElementById("consonantsCount").textContent = `Consonants: ${consonantCount}`;
+            document.getElementById("pagesCount").textContent = `Estimated Pages: ${estimatedPages}`;
+            document.getElementById("output").classList.remove("d-none");
+        });
+    </script>
+</body>
+</html>
+<!--End page.-->
